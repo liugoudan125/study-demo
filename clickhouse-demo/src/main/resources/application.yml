@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+    url: jdbc:clickhouse://91beiming.com:8123/tutorial?compress=0
+    username: default
+    password: ""

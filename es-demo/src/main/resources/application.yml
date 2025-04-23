@@ -1,0 +1,24 @@
+spring:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+  elasticsearch:
+#    uris: http://154.12.25.74:9201
+    uris: https://10.1.1.4:9200
+    username: elastic
+    password: yEmoRTQoHwfVQfygZQR6
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/data_es
+    url: jdbc:mysql://10.1.1.20:3306/es-data
+    username: root
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+mybatis:
+  mapper-locations: classpath:mapping/**.xml
+server:
+  tomcat:
+    accept-count: 100
+    max-connections: 10000
+    threads:
+      max: 500

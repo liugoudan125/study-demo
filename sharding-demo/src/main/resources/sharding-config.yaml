@@ -1,0 +1,69 @@
+databaseName: test
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+dataSources:
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&autoReconnect=true
+    username: beiming
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/data_es?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&autoReconnect=true
+    username: beiming
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+
+# 根据age分库,id分表
+rules:
+  - !SHARDING
+    tables:
+      student:
+        actualDataNodes: ds_${[0,1]}.student_${0..2}
+        tableStrategy:
+          standard:
+            shardingColumn: id
+            shardingAlgorithmName: ageInline
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: snowflake
+      teacher:
+        actualDataNodes: ds_${[0,1]}.teacher_${[20241001,20241002]}
+        tableStrategy:
+          standard:
+            shardingColumn: create_time
+            shardingAlgorithmName: create_interval
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: snowflake
+    shardingAlgorithms:
+      ageInline:
+        type: INLINE
+        props:
+          algorithm-expression: student_${id % 3}
+      age_inline_db:
+        type: INLINE
+        props:
+          algorithm-expression: ds_${age % 2}
+      create_interval:
+        type: INTERVAL
+        props:
+          datetime-pattern: "yyyy-MM-dd HH:mm:ss"
+          datetime-lower: "2024-10-01 00:00:00"
+          datetime-upper: "2024-10-02 23:59:59"
+          datetime-interval-amount: 1
+          datetime-interval-unit: "DAYS"
+          sharding-suffix-pattern: "yyyyMMdd"
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: age
+        shardingAlgorithmName: age_inline_db
+    keyGenerators:
+      snowflake:
+        type: SNOWFLAKE
+
+props:
+  sql-show: true

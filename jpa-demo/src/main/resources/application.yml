@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    username: beiming
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/jpa-demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+  jpa:
+    database: mysql
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  data:
+    jpa:
+      repositories:
+        enabled: true

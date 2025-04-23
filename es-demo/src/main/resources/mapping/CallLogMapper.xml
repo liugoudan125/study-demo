@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beiming.es.mapper.CallLogMapper">
+    <resultMap id="BaseResultMap" type="com.beiming.es.model.CallLog">
+        <!--@mbg.generated-->
+        <!--@Table call_log-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="log_uuid" jdbcType="VARCHAR" property="logUuid"/>
+        <result column="channel_type" jdbcType="VARCHAR" property="channelType"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="head" jdbcType="VARCHAR" property="head"/>
+        <result column="body" jdbcType="VARCHAR" property="body"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="del" jdbcType="CHAR" property="del"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delay" jdbcType="INTEGER" property="delay"/>
+        <result column="bill_state" jdbcType="CHAR" property="billState"/>
+        <result column="result_code" jdbcType="VARCHAR" property="resultCode"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="mapping_result" jdbcType="VARCHAR" property="mappingResult"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        log_uuid,
+        channel_type,
+        channel_name,
+        head,
+        body,
+        `result`,
+        del,
+        create_time,
+        update_time,
+        delay,
+        bill_state,
+        result_code,
+        price,
+        mapping_result
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from call_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from call_log
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.beiming.es.model.CallLog"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into call_log (log_uuid, channel_type, channel_name,
+                                              head, body, `result`,
+                                              del, create_time, update_time,
+                                              delay, bill_state, result_code,
+                                              price, mapping_result)
+        values (#{logUuid,jdbcType=VARCHAR}, #{channelType,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR},
+                #{head,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
+                #{del,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{delay,jdbcType=INTEGER}, #{billState,jdbcType=CHAR}, #{resultCode,jdbcType=VARCHAR},
+                #{price,jdbcType=DECIMAL}, #{mappingResult,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.beiming.es.model.CallLog"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into call_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logUuid != null and logUuid != ''">
+                log_uuid,
+            </if>
+            <if test="channelType != null and channelType != ''">
+                channel_type,
+            </if>
+            <if test="channelName != null and channelName != ''">
+                channel_name,
+            </if>
+            <if test="head != null and head != ''">
+                head,
+            </if>
+            <if test="body != null and body != ''">
+                body,
+            </if>
+            <if test="result != null and result != ''">
+                `result`,
+            </if>
+            <if test="del != null and del != ''">
+                del,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delay != null">
+                delay,
+            </if>
+            <if test="billState != null and billState != ''">
+                bill_state,
+            </if>
+            <if test="resultCode != null and resultCode != ''">
+                result_code,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="mappingResult != null and mappingResult != ''">
+                mapping_result,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logUuid != null and logUuid != ''">
+                #{logUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="channelType != null and channelType != ''">
+                #{channelType,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null and channelName != ''">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="head != null and head != ''">
+                #{head,jdbcType=VARCHAR},
+            </if>
+            <if test="body != null and body != ''">
+                #{body,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null and result != ''">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="del != null and del != ''">
+                #{del,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delay != null">
+                #{delay,jdbcType=INTEGER},
+            </if>
+            <if test="billState != null and billState != ''">
+                #{billState,jdbcType=CHAR},
+            </if>
+            <if test="resultCode != null and resultCode != ''">
+                #{resultCode,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="mappingResult != null and mappingResult != ''">
+                #{mappingResult,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.beiming.es.model.CallLog">
+        <!--@mbg.generated-->
+        update call_log
+        <set>
+            <if test="logUuid != null and logUuid != ''">
+                log_uuid = #{logUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="channelType != null and channelType != ''">
+                channel_type = #{channelType,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null and channelName != ''">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="head != null and head != ''">
+                head = #{head,jdbcType=VARCHAR},
+            </if>
+            <if test="body != null and body != ''">
+                body = #{body,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null and result != ''">
+                `result` = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="del != null and del != ''">
+                del = #{del,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delay != null">
+                delay = #{delay,jdbcType=INTEGER},
+            </if>
+            <if test="billState != null and billState != ''">
+                bill_state = #{billState,jdbcType=CHAR},
+            </if>
+            <if test="resultCode != null and resultCode != ''">
+                result_code = #{resultCode,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="mappingResult != null and mappingResult != ''">
+                mapping_result = #{mappingResult,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.beiming.es.model.CallLog">
+        <!--@mbg.generated-->
+        update call_log
+        set log_uuid       = #{logUuid,jdbcType=VARCHAR},
+            channel_type   = #{channelType,jdbcType=VARCHAR},
+            channel_name   = #{channelName,jdbcType=VARCHAR},
+            head           = #{head,jdbcType=VARCHAR},
+            body           = #{body,jdbcType=VARCHAR},
+            `result`       = #{result,jdbcType=VARCHAR},
+            del            = #{del,jdbcType=CHAR},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            delay          = #{delay,jdbcType=INTEGER},
+            bill_state     = #{billState,jdbcType=CHAR},
+            result_code    = #{resultCode,jdbcType=VARCHAR},
+            price          = #{price,jdbcType=DECIMAL},
+            mapping_result = #{mappingResult,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2024-09-03-->
+    <select id="selectAllByIdGreaterThan" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from call_log
+        where id <![CDATA[>]]> #{minId,jdbcType=BIGINT}
+        limit 1000
+    </select>
+</mapper>

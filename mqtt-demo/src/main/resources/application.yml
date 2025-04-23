@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: mqtt-demo
+
+rocketmq:
+  name-server: 154.12.25.74:9876
+  consumer:
+    group: mqtt-demo-consumer-group
+    pull-batch-size: 10
+  producer:
+    group: mqtt-demo-producer-group

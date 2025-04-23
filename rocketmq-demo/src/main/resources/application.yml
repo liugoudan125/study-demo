@@ -1,0 +1,14 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /rocketmq
+rocketmq:
+  name-server: goudan.online:9876
+  producer:
+    group: goudan2
+    send-message-timeout: 1000000
+    retry-times-when-send-async-failed: 3
+    retry-times-when-send-failed: 3
+  consumer:
+    pull-batch-size: 10000
+

@@ -1,0 +1,1 @@
+alter table user add column real_name varchar(50) null comment '真实姓名'

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            margin: auto;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        tr {
+            height: 30px;
+        }
+
+        ul.pagination {
+            display: block;
+            padding: 0;
+            text-align: center;
+        }
+
+        ul.pagination li {
+            display: inline;
+        }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        ul.pagination li a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        ul.pagination li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th colspan="2">id</th>
+        <th colspan="2">name</th>
+        <th colspan="2">sex</th>
+        <th colspan="2">age</th>
+        <th colspan="2">sign</th>
+        <th colspan="2">teacherId</th>
+        <th colspan="3">createTime</th>
+        <th colspan="3">updateTime</th>
+        <th colspan="2">isDeleted</th>
+    </tr>
+    </thead>
+    <tr th:each="student : ${pageInfo.list}">
+        <td colspan="2" th:text="${student.id}"></td>
+        <td colspan="2" th:text="${student.name}"></td>
+        <td colspan="2" th:text="${student.sex}"></td>
+        <td colspan="2" th:text="${student.age}"></td>
+        <td colspan="2" th:text="${student.sign}"></td>
+        <td colspan="2" th:text="${student.teacherId}"></td>
+        [[${#dates.format(date)}]]
+        <td colspan="3" th:text="${#temporals.format(student.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td colspan="3" th:text="${#temporals.format(student.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td colspan="2" th:text="${student.isDeleted}"></td>
+    </tr>
+</table>
+<ul class="pagination">
+    <li th:if="${pageInfo.isFirstPage}"><a th:disabled="true" href="#">«</a></li>
+    <li th:if="${!pageInfo.isFirstPage}"><a th:href="@{'/student/list/'+${pageInfo.pageNum - 1}+'/20'}">«</a></li>
+
+    <li th:each="pageNum : ${pageInfo.navigatepageNums}">
+        <a th:if="${pageInfo.pageNum == pageNum}" th:text="${pageNum}" class="active"
+           th:href="@{'/student/list/'+${pageNum}+'/20'}"></a>
+        <a th:if="${pageInfo.pageNum != pageNum}" th:text="${pageNum}"
+           th:href="@{'/student/list/'+${pageNum}+'/20'}"></a>
+    </li>
+
+    <li th:if="${pageInfo.isLastPage}"><a th:disabled="true" href="#">»</a></li>
+    <li th:if="${!pageInfo.isLastPage}"><a th:href="@{'/student/list/'+${pageInfo.pageNum + 1}+'/20'}">»</a></li>
+</ul>
+<input type="number" id="pageNum">
+<button id="jump" value="跳转">跳转</button>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById("jump").onclick = function () {
+            var pageNum = document.getElementById("pageNum").value;
+            if (pageNum == '') {
+                return
+            } else {
+                window.location.href = "/student/list/" + pageNum + "/20"
+            }
+        }
+    }
+</script>
+</html>

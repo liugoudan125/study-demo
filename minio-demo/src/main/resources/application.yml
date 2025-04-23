@@ -1,0 +1,17 @@
+server:
+  tomcat:
+    max-http-form-post-size: 10MB
+  port: 80
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${my.mysql.url:jdbc:mysql://mysql:3306/demo?useSSL=false&allowPublicKeyRetrieval=true}
+    username: root
+    password: Qwerty7878
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

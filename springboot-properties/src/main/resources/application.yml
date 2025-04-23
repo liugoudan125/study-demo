@@ -1,0 +1,11 @@
+task:
+  list:
+    white:
+      enable: true
+      groups:
+        - type: 0
+          list:
+            - 18721735392
+            - 1295820852
+            - 15860202
+            - 53086036

@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: default
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+
+my:
+  mysql:
+    url: jdbc:mysql://goudan.online:3306/security-demo?useSSL=false&allowPublicKeyRetrieval=true

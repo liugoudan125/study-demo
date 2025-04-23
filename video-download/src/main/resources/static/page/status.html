@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>download-status</title>
+
+    <script src="../js/jquery-3.5.1.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZh3w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="col-lg-8 col-lg-offset-2">
+    <h1 class="text-center">下载进度</h1>
+    <div>
+        <label>同时下载数量</label>
+        <input type="number" value="5" id="downloadSize">
+        <input type="button" value="确定" id="modifySize">
+    </div>
+    <!--等待下载-->
+    <h3>等待下载</h3>
+    <div id="wait" class="bg-warning" style="padding: 10px;margin: 3px">
+    </div>
+    <!--正在下载-->
+    <h3>正在下载</h3>
+    <div id="downloading" class="bg-info" style="padding: 10px;margin: 3px">
+    </div>
+    <!--下载完成-->
+    <h3>下载完成</h3>
+    <div id="downloaded" class="bg-danger" style="padding: 10px;margin: 3px">
+    </div>
+</div>
+
+</div>
+</body>
+<script>
+
+    $(function () {
+        getStatus()
+        setInterval(getStatus, 500)
+    })
+
+    $("#modifySize").click(function () {
+        var downloadSize = $("#downloadSize").val();
+        $.get("/video/modify/downloadSize/" + downloadSize, function (data) {
+            console.log(data)
+        })
+    })
+
+    var getStatus = function () {
+        $.get("/video/status", function (data) {
+            console.log(data)
+            var waitList = data.wait
+            var downloadingList = data.downloading
+            var downloadedList = data.downloaded
+            var waitDiv = $("#wait")
+            var downloadingDiv = $("#downloading")
+            var downloadedDiv = $("#downloaded")
+            waitDiv.empty()
+            for (var item of waitList) {
+                waitDiv.append(" <div><h5 style=\"word-break:break-all; word-wrap:break-word;\">" + item.name + "</h5></div>\n" +
+                    "        <div class=\"progress text-center\">等待下载\n" +
+                    "        </div>")
+            }
+            downloadingDiv.empty()
+            for (var item of downloadingList) {
+                downloadingDiv.append(" <div><h5 style=\"word-break:break-all; word-wrap:break-word;\">" + item.name + "</h5></div>\n" +
+                    "        <div class=\"progress\">\n" +
+                    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"" + item.process + "\" aria-valuemin=\"0\" aria-valuemax=\"100\"\n" +
+                    "                 style=\"min-width: 2em;width: " + item.process + "%;\">\n" +
+                    "                " + item.detail +
+                    "            </div>\n" +
+                    "        </div>")
+            }
+
+            downloadedDiv.empty()
+            for (var item of downloadedList) {
+                downloadedDiv.append("<div><h5 style=\"word-break:break-all; word-wrap:break-word;\">" + item.name + "</h5></div>\n" +
+                    "        <div class=\"progress\">\n" +
+                    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\"\n" +
+                    "                 style=\"width: 100%;\">\n" +
+                    "                下载完成\n" +
+                    "            </div>\n" +
+                    "        </div>")
+            }
+
+        })
+    }
+</script>
+</html>

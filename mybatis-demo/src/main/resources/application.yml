@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    hikari:
+      read-only: true
+      driver-class-name:
+  dynamic:
+    datasource:
+      master:
+        type: com.zaxxer.hikari.HikariDataSource
+        username: root
+        password: goudan125
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://goudan.online:3306/demo?useSSL=false&allowPublicKeyRetrieval=true&timeZone=GMT+8
+      slave:
+        username: root
+        password: goudan125
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://goudan.online:3306/demo-slave?useSSL=false&allowPublicKeyRetrieval=true
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+    enabled: false
+  redis:
+    host: goudan.online
+    port: 6379
+    password: goudan125
+    database: 0
+  flyway:
+    sql-migration-prefix: v
+    sql-migration-separator: _
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    enabled: true
+    clean-disabled: true #一定要加，禁止clean数据库
+    table: table_history
+    create-schemas: true
+    schemas: demo-slave
+    url: jdbc:mysql://goudan.online:3306?serverTimezone=Asia/Shanghai
+    password: goudan125
+    user: root
+    baseline-version: 1
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    root: info

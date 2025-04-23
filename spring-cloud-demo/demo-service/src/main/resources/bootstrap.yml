@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: demo-service
+  profiles:
+    active: dev
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    nacos:
+      server-addr: 10.1.1.20:8848
+      discovery:
+        enabled: true
+        register-enabled: true
+        namespace: 662dc80d-78be-4cf2-9455-8c43820767fc
+      config:
+        name: demo-service
+        enabled: true
+        file-extension: yaml
+        namespace: 662dc80d-78be-4cf2-9455-8c43820767fc
+
+---
+#测试环境
+spring:
+  config:
+    activate:
+      on-profile: test
+  cloud:
+    nacos:
+      server-addr: 10.1.1.20:8848
+      discovery:
+        enabled: true
+        register-enabled: true
+        namespace: 0553b8dc-975c-4c85-9785-4c8be176eee0
+      config:
+        name: demo-service
+        enabled: true
+        file-extension: yaml
+        namespace: 0553b8dc-975c-4c85-9785-4c8be176eee0
+
+---
+#生产环境
+spring:
+  config:
+    activate:
+      on-profile: prod
+  cloud:
+    nacos:
+      server-addr: 10.1.1.20:8848
+      discovery:
+        enabled: true
+        register-enabled: true
+        namespace: e6ce5ae5-61e9-4e4e-8764-6eae52a0e5a8
+      config:
+        name: demo-service
+        enabled: true
+        file-extension: yaml
+        namespace: e6ce5ae5-61e9-4e4e-8764-6eae52a0e5a8

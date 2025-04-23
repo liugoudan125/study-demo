@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: novel-crawler
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/novel?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true
+    username: beiming
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+    hikari:
+      idle-timeout: 600000 #单位ms
+      maximum-pool-size: 20
+      max-lifetime: 3600000 # 1h
+  data:
+    jpa:
+      repositories:
+        enabled: true
+    jdbc:
+      dialect: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    generate-ddl: true
+    database: mysql
+spider:
+  webdriver:
+    type: edge
+    driver: C:\selenium\edge\msedgedriver.exe
+    #    binary: c:\chrome\chrome.exe
+    #    driver: /app/selenium/linux64/chromedriver
+    #    binary: /app/selenium/linux64/chrome-headless-shell
+    #    binary: C:\Users\lcl\Downloads\chrome-win64\chrome.exe
+    #    proxy: http://10.1.1.180:7890
+    #    proxy: http://192.168.10.105:7890
+    capacity: 5
+    no-head: false
+  urls:
+    - https://69shuba.cx
+server:
+  port: 8090

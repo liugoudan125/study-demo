@@ -1,0 +1,20 @@
+"author": makejava
+"modulePath": C:/Users/lcl/IdeaProjects/study-demo/mybatis-demo
+"projectPath": C:/Users/lcl/IdeaProjects/study-demo
+
+"tabbleInfo.preName": 
+"tabbleInfo.name": User
+"tabbleInfo.comment": 用户登录表
+"tabbleInfo.savePackageName": online.goudan
+"tabbleInfo.savePath": ./mybatis-demo/src/main/java/online/goudan
+"tabbleInfo.saveModelName": mybatis-demo
+"tabbleInfo.fullColumn": 
+    id,主键ID,java.lang.Integer
+    thirdAccountId,第三方用户ID,java.lang.String
+    userName,用户名,java.lang.String
+    password,密码,java.lang.String
+    loginType,登录方式: 0-微信登录，1-账号密码登录,java.lang.Integer
+    deleted,是否删除,java.lang.Integer
+    createTime,创建时间,java.time.LocalDateTime
+    updateTime,最后更新时间,java.time.LocalDateTime
+

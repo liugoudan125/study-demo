@@ -1,0 +1,17 @@
+server:
+  port: 8001
+spring:
+  data:
+    mongodb:
+      username: goudan
+      password: Qwerty7878
+      authentication-database: admin
+      database: test
+      host: 10.1.1.20
+      port: 27017
+
+logging:
+  level:
+    com.beiming.mongo.repository: debug
+    org.mongodb: debug
+    org.springframework.data.mongodb: debug

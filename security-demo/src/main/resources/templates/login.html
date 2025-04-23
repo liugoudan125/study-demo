@@ -1,0 +1,44 @@
+<div style="width: 100%;height: 100vh;display: flex; justify-content: center; align-items: center">
+    <form th:action="@{/login}" method="post">
+        <table>
+            <tr>
+                <td><label>用户名: </label></td>
+                <td colspan="2"><input id="input-username" type="text" name="username" placeholder="用户名"></td>
+            </tr>
+            <tr>
+                <td><label>密码: </label></td>
+                <td colspan="2"><input id="input-password" type="password" name="password" placeholder="密码"></td>
+            </tr>
+            <tr>
+                <td><label>验证码: </label></td>
+                <td><input name="captcha" type="text" placeholder="验证码"></td>
+                <td><img width="120" height="30" style="object-fit: cover" alt="验证码" id="img-captcha"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input
+                        id="input-submit" type="submit" value="提交"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    document.getElementById("img-captcha").src = "/captcha?" + new Date().getTime()
+    document.getElementById("img-captcha").addEventListener("click", event => {
+        document.getElementById("img-captcha").src = "/captcha?" + new Date().getTime()
+    })
+</script>
+
+<style>
+    input {
+        outline: none;
+        border: none;
+        box-sizing: border-box;
+        padding: .5rem;
+        border-bottom: 1px solid black;
+        text-align: center;
+    }
+
+    #input-username {
+
+    }
+</style>

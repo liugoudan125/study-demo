@@ -1,0 +1,46 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: security-demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+    url: jdbc:mysql://rm-wz9ikqq4384062377co.mysql.rds.aliyuncs.com:3306/security-demo?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&autoReconnect=true
+    username: beiming
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    database: mysql
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - admin:ro
+
+  mvc:
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+  data:
+    redis:
+      client-type: lettuce
+      host: 91beiming.com
+      port: 6379
+      password: 1pDBtkAgu8ovrDqNwFe8emsdrG5qZAsa
+      database: 1
+    jpa:
+      repositories:
+        enabled: true
+        bootstrap-mode: lazy
+  session:
+    redis:
+      repository-type: indexed
+      namespace: beiming:session
+    timeout: 24h
+

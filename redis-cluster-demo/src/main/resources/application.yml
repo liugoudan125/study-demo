@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: redis-cluster-demo
+
+  data:
+    redis:
+      password: 1pDBtkAgu8ovrDqNwFe8emsdrG5qZAsa
+      client-type: lettuce
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 8
+          max-wait: 500ms
+          max-idle: 2
+      host: 10.1.1.20
+      port: 6379
+
+

@@ -1,0 +1,1 @@
+insert into goudan(id,name) values (3,"acc"),(4,"dd");

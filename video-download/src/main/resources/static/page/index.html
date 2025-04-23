@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>video-download</title>
+
+    <script src="../js/jquery-3.5.1.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="col-lg-8 col-lg-offset-2" style="margin-bottom: 50px">
+    <h1 class="text-center">Video-Info</h1>
+    <a class="pull-left" href="/status">查看下载进度</a> <a id="encode" onclick="encodeAndDecode()" class="pull-right">解密</a>
+    <table class="table table-bordered text-center" style="word-break:break-all; word-wrap:break-word;">
+        <thead class="row">
+        <td class="col-lg-0.5">id</td>
+        <td class="col-lg-2">name</td>
+        <td class="col-lg-3">url</td>
+        <td class="col-lg-3">pageUrl</td>
+        <td class="col-lg-1.5">gmtCreate</td>
+        <td class="col-lg-1.5">gmtModified</td>
+        <td class="col-lg-0.5">下载</td>
+        </thead>
+        <tbody id="videoBody">
+        </tbody>
+    </table>
+
+    <div>
+        <!-- 分页 -->
+        <nav aria-label="Page navigation">
+            <ul id="page" class="pagination center-block">
+            </ul>
+        </nav>
+        <button class="btn btn-default pull-right" type="submit" onclick="addVideo()">添加视频</button>
+        <button class="btn btn-default pull-right" type="submit" onclick="changeDownloadDir()">修改下载目录</button>
+        <span class="btn  pull-right" id="download-path"></span>
+    </div>
+</div>
+</body>
+
+<script>
+
+    $(function () {
+        getVideo(1)
+        $.get("/video/decode", function (data) {
+            encodeEnable = data;
+            if (data) {
+                $("#encode").text("加密")
+            } else {
+                $("#encode").text("解密")
+            }
+        })
+        $.get("/video/getPath", function (data) {
+            $("#download-path").html(data)
+        })
+
+    })
+    var changeDownloadDir = function () {
+
+        var dir = prompt("输入下载目录")
+        if (dir != null) {
+            $("#download-path").html(dir)
+            $.post("/video/path",
+                {
+                    "dir": dir
+                }),
+                function (data) {
+                    console.log(data)
+                }
+        }
+    }
+    var addVideo = function () {
+        var pageUrl = prompt("请输入视频详情页面的地址", "地址")
+        console.log(pageUrl)
+        if (pageUrl != null) {
+            if (IsURL(pageUrl)) {
+                $.post("/video/driver",
+                    {"pageUrl": pageUrl},
+                    function (data) {
+                        console.log(data)
+                    })
+            } else {
+                alert("网址不合法！")
+            }
+        }
+    }
+
+    var encodeEnable;
+    var golbalData;
+    var encodeAndDecode = function () {
+        if (encodeEnable) {
+            $.get("/video/decode/false", function (status) {
+                encodeEnable = false;
+                getVideo(golbalData.pageNum)
+                $("#encode").text("解密")
+            })
+        } else {
+            $.get("/video/decode/true", function (status) {
+                encodeEnable = true;
+                getVideo(golbalData.pageNum)
+                $("#encode").text("加密")
+            })
+        }
+    }
+
+    var IsURL = function (strUrl) {
+        var regular = /^\b(((https?|ftp):\/\/)?[-a-z0-9]+(\.[-a-z0-9]+)*\.(?:com|edu|gov|int|mil|net|org|biz|info|name|museum|asia|coop|aero|[a-z][a-z]|((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d))\b(\/[-a-z0-9_:\@&?=+,.!\/~%\$]*)?)$/i
+        if (regular.test(strUrl)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    var getVideo = function (pageIndex) {
+        $.get("/video?page=" + pageIndex, function (data) {
+            console.log(data)
+            golbalData = data
+            content(data.list)
+            navigate(data)
+        })
+    }
+
+    var content = function (list) {
+        var videoBody = $("#videoBody")
+        videoBody.empty()
+        for (var video of list) {
+            if (!video.downloadStatus) {
+                videoBody.append("<tr>\n" +
+                    "            <td>" + video.id + "</td>\n" +
+                    "            <td>" + video.name + "</td>\n" +
+                    "            <td><a href=" + video.url + ">" + video.url + "</a></td>\n" +
+                    "            <td>" + video.pageUrl + "</td>\n" +
+                    "            <td>" + video.gmtCreate + "</td>\n" +
+                    "            <td>" + video.gmtModified + "</td>\n" +
+                    "            <td>\n" +
+                    "            <a onclick='downVideo(" + video.id + ")' href=\"javascript:void(0)\"><img src=\"../img/download.png\"></a>\n" +
+                    "            </td>" +
+                    "        </tr>")
+            } else {
+                videoBody.append("<tr>\n" +
+                    "            <td>" + video.id + "</td>\n" +
+                    "            <td>" + video.name + "</td>\n" +
+                    "            <td><a href=" + video.url + ">" + video.url + "</a></td>\n" +
+                    "            <td>" + video.pageUrl + "</td>\n" +
+                    "            <td>" + video.gmtCreate + "</td>\n" +
+                    "            <td>" + video.gmtModified + "</td>\n" +
+                    "            <td>\n" +
+                    "            <a  href=\"javascript:void(0)\"><img src=\"../img/disable.png\"></a>\n" +
+                    "            </td>" +
+                    "        </tr>")
+            }
+        }
+    }
+    var downVideo = function (videoId) {
+        $.get("/video/download?id=" + videoId, function (data) {
+            console.log(data)
+            if (data) {
+                alert(data)
+                getVideo(golbalData.pageNum)
+            }
+        })
+    }
+
+    var navigate = function (data) {
+        var page = $("#page");
+        page.empty()
+        if (data.hasPreviousPage) {
+            page.append(" <li>\n" +
+                "                    <a href=\"javascript:void(0)\" onclick='getVideo(1)' aria-label=\"Previous\">\n" +
+                "                        <span aria-hidden=\"true\">&laquo;&laquo;</span>\n" +
+                "                    </a>\n" +
+                "                </li>")
+            page.append(" <li>\n" +
+                "                    <a href=\"javascript:void(0)\" onclick='getVideo(" + data.prePage + ")' aria-label=\"Previous\">\n" +
+                "                        <span aria-hidden=\"true\">&laquo;</span>\n" +
+                "                    </a>\n" +
+                "                </li>")
+        } else {
+            page.append("    <li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;&laquo;</span></a></li>")
+            page.append("    <li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>")
+        }
+
+        var navigatepageNums = data.navigatepageNums;
+        for (var num of navigatepageNums) {
+            if (num === data.pageNum) {
+                page.append("<li class=\"active\"><a href=\"#\">" + num + "<span class=\"sr-only\">(current)</span></a></li>\n")
+            } else {
+                page.append("<li><a  href=\"javascript:void(0)\" onclick='getVideo(" + num + ")'>" + num + "</a></li>\n")
+            }
+        }
+
+        if (data.hasNextPage) {
+            page.append(" <li>\n" +
+                "                    <a href=\"javascript:void(0)\" onclick='getVideo(" + data.nextPage + ")' aria-label=\"Next\">\n" +
+                "                        <span aria-hidden=\"true\">&raquo;</span>\n" +
+                "                    </a>\n" +
+                "                </li>")
+            page.append(" <li>\n" +
+                "                    <a href=\"javascript:void(0)\" onclick='getVideo(" + data.pages + ")' aria-label=\"Next\">\n" +
+                "                        <span aria-hidden=\"true\">&raquo;&raquo;</span>\n" +
+                "                    </a>\n" +
+                "                </li>")
+        } else {
+            page.append("<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>")
+            page.append("<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;&raquo;</span></a></li>")
+        }
+    }
+
+</script>
+</html>

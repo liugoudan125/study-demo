@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            margin: auto;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        tr {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th colspan="2">属性</th>
+        <th colspan="3">属性值</th>
+    </tr>
+    </thead>
+    <tr th:each="map : ${student}">
+        <td colspan="2" th:text="${map.name}"></td>
+        <td colspan="3" th:text="${map.value}"></td>
+    </tr>
+
+</table>
+</body>
+</html>

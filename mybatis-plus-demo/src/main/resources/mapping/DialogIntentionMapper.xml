@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beiming.demo.mapper.DialogIntentionMapper">
+  <resultMap id="BaseResultMap" type="com.beiming.demo.domain.DialogIntention">
+    <!--@mbg.generated-->
+    <!--@Table dialog_intention-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="keyword" jdbcType="LONGVARCHAR" property="keyword" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, customer_id, `type`, `name`, keyword, create_time, update_time
+  </sql>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into dialog_intention
+    (customer_id, `type`, `name`, keyword, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.customerId,jdbcType=BIGINT}, #{item.type,jdbcType=INTEGER}, #{item.name,jdbcType=VARCHAR}, 
+        #{item.keyword,jdbcType=LONGVARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,39 @@
+#spring:
+#  datasource:
+#    ds0:
+#      type: com.zaxxer.hikari.HikariDataSource
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://localhost:3306/sharding?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+#      username: liuchenglong
+#      password: goudan125
+spring:
+  shardingsphere:
+    datasource:
+      names: ds0
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/sharding?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+        username: liuchenglong
+        password: goudan125
+
+
+    sharding:
+      tables:
+        test:
+          actual-data-nodes: ds0.test$->{1..2}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: test$->{id % 2 + 1}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+      binding-tables: test
+    props:
+      sql:
+        show: true
+  #        broadcast-tables: test
+
+#  spring.shardingsphere.sharding.default-database-strategy.inline.sharding-column=user_id
+#  spring.shardingsphere.sharding.default-database-strategy.inline.algorithm-expression=ds$->{user_id % 2}

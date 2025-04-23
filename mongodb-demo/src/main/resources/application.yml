@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://goudan:goudan125@goudan.online:27017/demo?authSource=admin

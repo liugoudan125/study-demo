@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: thymeleaf-demo
+  thymeleaf:
+    cache: true
+    enabled: true
+    prefix: classpath:/static/html/
+    suffix: .html
+  profiles:
+    active: default
+

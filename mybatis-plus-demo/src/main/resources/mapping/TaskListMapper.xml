@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beiming.demo.mapper.TaskListMapper">
+  <resultMap id="BaseResultMap" type="com.beiming.demo.domain.TaskList">
+    <!--@mbg.generated-->
+    <!--@Table task_list-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="called_name" jdbcType="VARCHAR" property="calledName" />
+    <result column="called_phone" jdbcType="VARCHAR" property="calledPhone" />
+    <result column="external_data" jdbcType="VARCHAR" property="externalData" />
+    <result column="is_executing" jdbcType="INTEGER" property="isExecuting" />
+    <result column="execution_time" jdbcType="TIMESTAMP" property="executionTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="retry_num" jdbcType="INTEGER" property="retryNum" />
+    <result column="ready_time" jdbcType="TIMESTAMP" property="readyTime" />
+    <result column="calling_time" jdbcType="TIMESTAMP" property="callingTime" />
+    <result column="enable" jdbcType="INTEGER" property="enable" />
+    <result column="disable_reason" jdbcType="VARCHAR" property="disableReason" />
+    <result column="dialog_status" jdbcType="INTEGER" property="dialogStatus" />
+    <result column="task_dialog_id" jdbcType="BIGINT" property="taskDialogId" />
+    <result column="last_update_dialog_time" jdbcType="TIMESTAMP" property="lastUpdateDialogTime" />
+    <result column="is_visible" jdbcType="INTEGER" property="isVisible" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, task_id, called_name, called_phone, external_data, is_executing, execution_time, 
+    `status`, retry_num, ready_time, calling_time, `enable`, disable_reason, dialog_status, 
+    task_dialog_id, last_update_dialog_time, is_visible, create_time, update_time
+  </sql>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+      <!--@mbg.generated-->
+      insert into task_list
+      (id,task_id, called_name, called_phone, external_data, is_executing, execution_time,
+       `status`, retry_num, ready_time, calling_time, `enable`, disable_reason, dialog_status,
+       task_dialog_id, last_update_dialog_time, is_visible)
+      values
+      <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.taskId,jdbcType=BIGINT}, #{item.calledName,jdbcType=VARCHAR}, #{item.calledPhone,jdbcType=VARCHAR},
+       #{item.externalData,jdbcType=VARCHAR}, #{item.isExecuting,jdbcType=INTEGER},
+       #{item.executionTime,jdbcType=TIMESTAMP},
+       #{item.status,jdbcType=INTEGER}, #{item.retryNum,jdbcType=INTEGER}, #{item.readyTime,jdbcType=TIMESTAMP},
+       #{item.callingTime,jdbcType=TIMESTAMP}, #{item.enable,jdbcType=INTEGER},
+       #{item.disableReason,jdbcType=VARCHAR},
+       #{item.dialogStatus,jdbcType=INTEGER}, #{item.taskDialogId,jdbcType=BIGINT},
+       #{item.lastUpdateDialogTime,jdbcType=TIMESTAMP},
+       #{item.isVisible,jdbcType=INTEGER})
+  </foreach>
+  </insert>
+</mapper>

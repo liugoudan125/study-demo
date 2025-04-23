@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&autoReconnect=true
+    username: root
+    password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+  quartz:
+    job-store-type: jdbc # 定时任务的数据保存到jdbc即数据库中
+    jdbc:
+      # embedded：默认
+      # always：启动的时候初始化表，我们只在第一次启动的时候用它来自动创建表，然后改回embedded即可，不然数据每次都会被清空
+      # never：启动的时候不初始化表，也不知道和embedded有什么不同
+      initialize-schema: embedded
+      platform: mysql
+    properties:
+      org:
+        quartz:
+          dataSource:
+            voiceQz:
+              driver: com.mysql.cj.jdbc.Driver
+              user: root
+              password: mZG7BBRFp9QsrT8v3XsWyU6Uej95ofB5
+              URL: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&autoReconnect=true
+          scheduler:
+            instanceName: VoiceScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            tablePrefix: QRTZ_
+            isClustered: true
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            dataSource: voiceQz
+            useProperties: true
+          jobListener:
+            NAME:
+              class: com.beiming.quartz.listener.MyJobListener
+              name: myJobListener
+          triggerListener:
+            NAME:
+              class: com.beiming.quartz.listener.MyTriggerListener
+
+
