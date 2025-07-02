@@ -1,6 +1,19 @@
 #!/bin/bash
-git add . &&
-git commit -m "$(date "+%Y-%m-%d %H:%M:%S")" &&
-git pull origin $(git branch | awk -F* '{print $2}')
-git push origin $(git branch | awk -F* '{print $2}')
-
+username=$(git config user.name)
+userEmail=$(git config user.email)
+echo "username: $username"
+echo "userEmail: $userEmail"
+git config user.name liuchenglong
+git config user.email liuchenglong125@foxmail.com
+currentBranchName=$(git branch --show-current)
+commitMsg=$(date "+%Y-%m-%d %H:%M:%S")
+echo "当前分支: $currentBranchName"
+echo "提交内容: $commitMsg"
+git add .
+git commit -m "$commitMsg"
+git pull origin $currentBranchName
+git push origin $currentBranchName || (echo "同步到远程仓库失败")
+git push gitlab $currentBranchName || (echo "同步到远程仓库失败")
+git config user.name $username
+git config user.email $userEmail
+echo "提交完成"
