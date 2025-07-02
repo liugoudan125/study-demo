@@ -1,8 +1,4 @@
 #!/bin/bash
-username=$(git config user.name)
-userEmail=$(git config user.email)
-echo "username: $username"
-echo "userEmail: $userEmail"
 git config user.name liuchenglong
 git config user.email liuchenglong125@foxmail.com
 currentBranchName=$(git branch --show-current)
@@ -14,6 +10,4 @@ git commit -m "$commitMsg"
 git pull origin $currentBranchName
 git push origin $currentBranchName || (echo "同步到远程仓库失败")
 git push gitlab $currentBranchName || (echo "同步到远程仓库失败")
-git config user.name $username
-git config user.email $userEmail
 echo "提交完成"
