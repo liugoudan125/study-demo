@@ -9,5 +9,4 @@ git add .
 git commit -m "$commitMsg"
 git pull origin $currentBranchName
 git push origin $currentBranchName || (echo "同步到远程仓库失败")
-git push gitlab $currentBranchName || (echo "同步到远程仓库失败")
 echo "提交完成"
