@@ -9,8 +9,8 @@ task:
             - 1295820852
             - 15860202
             - 53086036
-test:
-  list: #复杂类型注入,适合使用 xxxProperties 类
-    - liu
-    - cheng
-    - long
+#test:
+#  list: #复杂类型注入,适合使用 xxxProperties 类
+#    - liu
+#    - cheng
+#    - long

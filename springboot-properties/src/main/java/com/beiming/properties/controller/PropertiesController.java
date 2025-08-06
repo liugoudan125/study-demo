@@ -21,7 +21,7 @@ public class PropertiesController {
     @Resource
     private WhitelistProperties properties;
 
-    @Value("${test.list}")
+    @Value("${test.list:积极式}")
     private List<String> list;
 
     @GetMapping("get")
@@ -32,6 +32,6 @@ public class PropertiesController {
 
     @GetMapping("list")
     public List<String> getList() {
-        return Arrays.asList(list);
+        return list;
     }
 }
