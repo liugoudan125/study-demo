@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class PropertiesController {
     @Resource
     private WhitelistProperties properties;
 
-    @Value("{test.list:1,2,3,4}")
+    @Value("${test.list}")
     private List<String> list;
 
     @GetMapping("get")
@@ -31,6 +32,6 @@ public class PropertiesController {
 
     @GetMapping("list")
     public List<String> getList() {
-        return list;
+        return Arrays.asList(list);
     }
 }
