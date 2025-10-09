@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beiming.demo.dao.SysFileDao">
+
+    <resultMap type="com.beiming.demo.model.SysFile" id="SysFileMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+        <result property="bucket" column="bucket" jdbcType="VARCHAR"/>
+        <result property="objectKey" column="object_key" jdbcType="VARCHAR"/>
+        <result property="fileDigest" column="file_digest" jdbcType="VARCHAR"/>
+        <result property="fileSize" column="file_size" jdbcType="INTEGER"/>
+        <result property="mimeType" column="mime_type" jdbcType="VARCHAR"/>
+        <result property="ossUrl" column="oss_url" jdbcType="VARCHAR"/>
+        <result property="uploadUserId" column="upload_user_id" jdbcType="INTEGER"/>
+        <result property="uploadAt" column="upload_at" jdbcType="TIMESTAMP"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>
+

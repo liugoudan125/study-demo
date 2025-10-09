@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beiming.demo.dao.ArticleViewLogDao">
+
+    <resultMap type="com.beiming.demo.model.ArticleViewLog" id="ArticleViewLogMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="articleId" column="article_id" jdbcType="INTEGER"/>
+        <result property="ipAddress" column="ip_address" jdbcType="VARCHAR"/>
+        <result property="userAgent" column="user_agent" jdbcType="VARCHAR"/>
+        <result property="referer" column="referer" jdbcType="VARCHAR"/>
+        <result property="viewedAt" column="viewed_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>
+
