@@ -18,19 +18,19 @@ import java.time.Clock;
 @Component
 public class TestMqListener {
 
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(name = "test",
-                    arguments = {
-                            @Argument(name = "x-queue-type", value = "quorum")
-                    }),
-            exchange = @Exchange(name = "test", type = ExchangeTypes.TOPIC),
-            key = "test"
-    ))
+//    @RabbitListener(bindings = @QueueBinding(
+//            value = @Queue(name = "test",
+//                    arguments = {
+//                            @Argument(name = "x-queue-type", value = "quorum")
+//                    }),
+//            exchange = @Exchange(name = "test", type = ExchangeTypes.TOPIC),
+//            key = "test"
+//    ))
+//    @RabbitListener(queues = "test-queue")
+    @RabbitListener(queues = "customs.goods.declare")
 //    public void handlerMessage(String msg, Channel channel, Message message) throws Exception {
     public void handlerMessage(Message message) throws Exception {
         String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-        long timestamp = Clock.systemUTC().millis();
-        long sendTimestamp = Long.parseLong(msg);
-        System.out.println("%d - %d = %04d".formatted(timestamp, sendTimestamp, timestamp - sendTimestamp));
+        System.out.println(msg);
     }
 }
